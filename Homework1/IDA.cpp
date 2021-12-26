@@ -1,7 +1,10 @@
 #include <cmath>
 #include <queue>
+#include <string>
+#include <stack>
 #include <set>
 #include "IDA.h"
+#include <chrono>
 
 class Compare
 {
@@ -54,11 +57,12 @@ void print_board(State st) {
     cout << endl;
 }
 
-void print_commands(State final_state) { 
-    State* current = &final_state;
-    while(current != nullptr) {
-        print_board(*current);
-        switch ((*current).get_direction()) {
+void print_information(vector<State> path) { 
+    cout << path[path.size() - 1].get_depth() << endl;
+    cout << endl;
+    for(int i = 0; i < path.size(); i++) {
+        //print_board(path[i]);
+        switch (path[i].get_direction()) {
             case 'l':
                 cout << "left" << endl;
                 break;
@@ -72,10 +76,8 @@ void print_commands(State final_state) {
                 cout << "down" << endl;
                 break;
             case 'x':
-                cout << "start state" << endl;
                 break;
         }
-        current = (*current).get_parent();
     }      
 }
 
@@ -89,7 +91,7 @@ bool search_for_goal(vector<State>& path, int threshold, int &min_f)
     }
 
     if (current == create_goal_state(current.get_num())) {
-        print_commands(current);
+        //print_information(current);
         return true;
     }
 
@@ -129,14 +131,11 @@ void IterativeDeepeningAStar(State start_state)
     int min_path_length = start_state.get_f();
     while (!path.empty())
     {
-        cout << path.size() << endl;
         if (search_for_goal(path, threshold, min_path_length))
         {
-            cout << "Goal state was reached" << endl;
-            cout << "path length: " << min_path_length << endl;
+            print_information(path);
             return;
         }
         threshold = min_path_length;
-        cout << "conntinue search with new threshold " << threshold << endl;
     }
 }

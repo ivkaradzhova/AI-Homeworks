@@ -18,7 +18,6 @@ class State {
         //u - moved a plate up
         //d - moved a plate down
         char direction; 
-        State* parent;
 
         void find_next_states();
         void calculate_manhatan_sum();
@@ -29,11 +28,9 @@ class State {
         int get_manhatan_sum();
         int get_depth();
         int get_f();
-        State* get_parent();
         char get_direction();
         void set_direction(char direction);
         void set_depth(int dep);
-        void set_parent(State* pr);
         vector<State> get_next_states();
         vector<vector<int>> get_board();
         bool operator == (State other);

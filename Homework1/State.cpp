@@ -5,7 +5,6 @@ State::State(int num, vector <vector <int> > numbers, pair<int, int> empty_space
     this->number_count = num;
     this->empty_space = empty_space_coordinates;
     this->board = numbers;
-    this->parent = nullptr;
     this->direction = 'x';
     this->board_size = sqrt(num + 1);
     this->calculate_manhatan_sum();
@@ -59,9 +58,6 @@ int State::get_f() {
     return this->manhatan_sum + this->depth;
 }
 
-State* State::get_parent(){
-    return this->parent;
-}
 
 int State::get_manhatan_sum(){
     return this->manhatan_sum;
@@ -93,10 +89,6 @@ void State::calculate_manhatan_sum() {
     this->manhatan_sum = sum;
 }
 
-
-void State::set_parent(State* pr) {
-    this->parent = pr;
-}
 
 vector<State> State::get_next_states() {
     vector <State> new_states;
