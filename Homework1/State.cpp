@@ -1,4 +1,5 @@
 #include "State.h"
+#include "Resolvable.h"
 #include <cmath>
 
 State::State(int num, vector <vector <int> > numbers, pair<int, int> empty_space_coordinates) {
@@ -46,9 +47,15 @@ char State::get_direction() {
     return this->direction;
 }
 
+
+int State::get_board_size() {
+    return this->board_size;
+}
+
 void State::set_direction(char direction) {
     this->direction = direction;
 }
+
 
 void State::set_depth(int dep) {
     this->depth = dep;

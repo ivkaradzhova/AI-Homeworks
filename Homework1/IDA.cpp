@@ -1,19 +1,10 @@
 #include <cmath>
-#include <queue>
 #include <string>
-#include <stack>
 #include <set>
 #include "IDA.h"
+#include "Resolvable.h"
 #include <chrono>
-
-class Compare
-{
-public:
-    bool operator()(State a, State b)
-    {
-        return a.get_f() > b.get_f();
-    }
-};
+using namespace std::chrono;
 
 State create_goal_state(int num)
 {
@@ -100,7 +91,6 @@ bool search_for_goal(vector<State>& path, int threshold, int &min_f)
 
     for (int i = 0; i < next_states.size(); i++) {
         next_states[i].set_depth(current.get_depth() + 1);
-        next_states[i].set_parent(&current);
         if (!path_contains_state(path, next_states[i]))
         {
             path.push_back(next_states[i]);
@@ -124,15 +114,31 @@ bool search_for_goal(vector<State>& path, int threshold, int &min_f)
 //only solvable boards
 void IterativeDeepeningAStar(State start_state)
 {
+    //Start timer
+    auto start = high_resolution_clock::now();
+
+    if (!state_is_resolvable(start_state)) {
+        cout << "State is not resolvable" << endl;
+        return;
+    }
+
     start_state.set_depth(0);
+
     int threshold = start_state.get_manhatan_sum();
+
     vector<State> path;
     path.push_back(start_state);
+
     int min_path_length = start_state.get_f();
+
     while (!path.empty())
     {
         if (search_for_goal(path, threshold, min_path_length))
         {
+            //Stop the timer befor printing the result
+            auto stop = high_resolution_clock::now();
+            auto duration = duration_cast<milliseconds>(stop - start);
+            cout << "Time: " << duration.count() << " milliseconds" << endl;
             print_information(path);
             return;
         }

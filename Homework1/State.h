@@ -9,7 +9,6 @@ class State {
         int manhatan_sum;
         int number_count;
         int board_size;
-        pair<int, int> empty_space;
         vector< vector<int> > board;
         int depth;
         //x - root state
@@ -24,10 +23,14 @@ class State {
         
     public:
         State(int num, vector <vector <int> > numbers, pair<int, int> empty_space_coordinates);
+        
+        pair<int, int> empty_space;
         int get_num();
         int get_manhatan_sum();
         int get_depth();
         int get_f();
+        int get_board_size();
+        int get_num_invertions();
         char get_direction();
         void set_direction(char direction);
         void set_depth(int dep);

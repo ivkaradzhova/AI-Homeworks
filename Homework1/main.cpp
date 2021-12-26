@@ -1,4 +1,5 @@
 #include "IDA.h"
+#include "Resolvable.h"
 
 int main() {
     int nums[3][3] = {{3,8,5},{2,0,4},{7,6,1}};
