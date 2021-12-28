@@ -1,17 +1,26 @@
 #include "IDA.h"
 #include "Resolvable.h"
+#include<cmath>
 
 int main() {
-    int nums[3][3] = {{3,8,5},{2,0,4},{7,6,1}};
-    
+    int num;
+    pair<int, int> empty_pos;
     vector<vector<int>> numbers;
-    for (int i = 0; i < 3; i++) {
-        vector<int> a(nums[i], nums[i] + 3);
-        numbers.push_back(a);
+    cin >> num;
+    int board_size = sqrt(num + 1);
+
+    for (int  i = 0; i < board_size; i++) {
+        vector<int> row(board_size, 0);
+        for(int j = 0; j < board_size; j++) {
+            cin >> row[j];
+            if (row[j] == 0) {
+                empty_pos.first = i;
+                empty_pos.second = j;
+            }
+        }
+        numbers.push_back(row);
     }
 
-    State st(8, numbers, make_pair(1,1));
-    vector<State> next_states = st.get_next_states();
-
+    State st(num, numbers, empty_pos);
     IterativeDeepeningAStar(st);    
 }   
